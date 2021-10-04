@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+
+
 {% block content %}
 
     <style>
@@ -14,10 +16,15 @@
 
         <h1>Component View</h1>
 
-        <form method="POST" action="{% url 'threat_modeling' appId=appId  %}">
+        <br>
+            <form method="POST" action="{% url 'threat_agent_wizard' appId=appId  %}">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary btn-sm">Complete Threat Modeling</button>
-        </form>
+
+            <div style="text-align: center;">
+            <button type="submit" class="btn btn-primary btn-sm">Start Security Assessment</button>
+            </div>
+
+            </form>
 
         <table class="table">
         <thead>

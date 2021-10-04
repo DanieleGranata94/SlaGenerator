@@ -894,10 +894,20 @@ class Block(PandasObject):
 
         rb = [self if inplace else self.copy()]
         for i, (src, dest) in enumerate(pairs):
+            convert = i == src_len  # only convert once at the end
             new_rb: List["Block"] = []
-            for blk in rb:
-                m = masks[i]
-                convert = i == src_len  # only convert once at the end
+
+            # GH-39338: _replace_coerce can split a block into
+            # single-column blocks, so track the index so we know
+            # where to index into the mask
+            for blk_num, blk in enumerate(rb):
+                if len(rb) == 1:
+                    m = masks[i]
+                else:
+                    mib = masks[i]
+                    assert not isinstance(mib, bool)
+                    m = mib[blk_num : blk_num + 1]
+
                 result = blk._replace_coerce(
                     to_replace=src,
                     value=dest,
@@ -1458,7 +1468,7 @@ class Block(PandasObject):
             raise ValueError("where must have a condition that is ndarray like")
 
         if cond.ravel("K").all():
-            result = values
+            result = values.copy()
         else:
             # see if we can operate on the entire block, or need item-by-item
             # or if we are a single block (ndim == 1)
@@ -2148,7 +2158,13 @@ class IntBlock(NumericBlock):
 class DatetimeLikeBlockMixin(Block):
     """Mixin class for DatetimeBlock, DatetimeTZBlock, and TimedeltaBlock."""
 
-    _can_hold_na = True
+    @property
+    def _holder(self):
+        return DatetimeArray
+
+    @property
+    def fill_value(self):
+        return np.datetime64("NaT", "ns")
 
     def get_values(self, dtype=None):
         """
@@ -2216,8 +2232,10 @@ class DatetimeLikeBlockMixin(Block):
 class DatetimeBlock(DatetimeLikeBlockMixin):
     __slots__ = ()
     is_datetime = True
-    _holder = DatetimeArray
-    fill_value = np.datetime64("NaT", "ns")
+
+    @property
+    def _can_hold_na(self):
+        return True
 
     def _maybe_coerce_values(self, values):
         """
@@ -2308,16 +2326,16 @@ class DatetimeTZBlock(ExtensionBlock, DatetimeBlock):
     is_extension = True
 
     internal_values = Block.internal_values
-
-    _holder = DatetimeBlock._holder
     _can_hold_element = DatetimeBlock._can_hold_element
     to_native_types = DatetimeBlock.to_native_types
     diff = DatetimeBlock.diff
-    fillna = DatetimeBlock.fillna  # i.e. Block.fillna
-    fill_value = DatetimeBlock.fill_value
-    _can_hold_na = DatetimeBlock._can_hold_na
+    fill_value = np.datetime64("NaT", "ns")
 
     array_values = ExtensionBlock.array_values
+
+    @property
+    def _holder(self):
+        return DatetimeArray
 
     def _maybe_coerce_values(self, values):
         """
@@ -2383,6 +2401,17 @@ class DatetimeTZBlock(ExtensionBlock, DatetimeBlock):
         #  return an object-dtype ndarray of Timestamps.
         return np.asarray(self.values.astype("datetime64[ns]", copy=False))
 
+    def fillna(self, value, limit=None, inplace=False, downcast=None):
+        # We support filling a DatetimeTZ with a `value` whose timezone
+        # is different by coercing to object.
+        if self._can_hold_element(value):
+            return super().fillna(value, limit, inplace, downcast)
+
+        # different timezones, or a non-tz
+        return self.astype(object).fillna(
+            value, limit=limit, inplace=inplace, downcast=downcast
+        )
+
     def quantile(self, qs, interpolation="linear", axis=0):
         naive = self.values.view("M8[ns]")
 
@@ -2419,9 +2448,11 @@ class DatetimeTZBlock(ExtensionBlock, DatetimeBlock):
         return ndim
 
 
-class TimeDeltaBlock(DatetimeLikeBlockMixin):
+class TimeDeltaBlock(DatetimeLikeBlockMixin, IntBlock):
     __slots__ = ()
     is_timedelta = True
+    _can_hold_na = True
+    is_numeric = False
     fill_value = np.timedelta64("NaT", "ns")
 
     def _maybe_coerce_values(self, values):

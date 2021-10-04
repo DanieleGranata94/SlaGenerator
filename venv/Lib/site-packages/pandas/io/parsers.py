@@ -325,6 +325,11 @@ encoding : str, optional
     Encoding to use for UTF when reading/writing (ex. 'utf-8'). `List of Python
     standard encodings
     <https://docs.python.org/3/library/codecs.html#standard-encodings>`_ .
+    .. versionchanged:: 1.2
+
+       When ``encoding`` is ``None``, ``errors="replace"`` is passed to
+       ``open()``. Otherwise, ``errors="strict"`` is passed to ``open()``.
+       This behavior was previously only the case for ``engine="python"``.
 dialect : str or csv.Dialect, optional
     If provided, this parameter will override values (default or not) for the
     following parameters: `delimiter`, `doublequote`, `escapechar`,
@@ -2288,7 +2293,11 @@ class PythonParser(ParserBase):
             self._open_handles(f, kwds)
             assert self.handles is not None
             assert hasattr(self.handles.handle, "readline")
-            self._make_reader(self.handles.handle)
+            try:
+                self._make_reader(self.handles.handle)
+            except (csv.Error, UnicodeDecodeError):
+                self.close()
+                raise
 
         # Get columns in two steps: infer from data, then
         # infer column indices from self.usecols if it is specified.

@@ -56,6 +56,7 @@ from pandas.compat.numpy import function as nv
 from pandas.errors import AbstractMethodError, InvalidIndexError
 from pandas.util._decorators import doc, rewrite_axis_style_signature
 from pandas.util._validators import (
+    validate_ascending,
     validate_bool_kwarg,
     validate_fillna_kwargs,
     validate_percentile,
@@ -172,7 +173,9 @@ class NDFrame(PandasObject, SelectionMixin, indexing.IndexingMixin):
     ]
     _internal_names_set: Set[str] = set(_internal_names)
     _accessors: Set[str] = set()
-    _hidden_attrs: FrozenSet[str] = frozenset(["get_values", "tshift"])
+    _hidden_attrs: FrozenSet[str] = frozenset(
+        ["_AXIS_NAMES", "_AXIS_NUMBERS", "get_values", "tshift"]
+    )
     _metadata: List[str] = []
     _is_copy = None
     _mgr: BlockManager
@@ -4516,7 +4519,7 @@ class NDFrame(PandasObject, SelectionMixin, indexing.IndexingMixin):
         self,
         axis=0,
         level=None,
-        ascending: bool_t = True,
+        ascending: Union[Union[bool_t, int], Sequence[Union[bool_t, int]]] = True,
         inplace: bool_t = False,
         kind: str = "quicksort",
         na_position: str = "last",
@@ -4527,6 +4530,8 @@ class NDFrame(PandasObject, SelectionMixin, indexing.IndexingMixin):
 
         inplace = validate_bool_kwarg(inplace, "inplace")
         axis = self._get_axis_number(axis)
+        ascending = validate_ascending(ascending)
+
         target = self._get_axis(axis)
 
         indexer = get_indexer_indexer(
@@ -6436,6 +6441,7 @@ class NDFrame(PandasObject, SelectionMixin, indexing.IndexingMixin):
             return result.__finalize__(self, method="fillna")
 
     @final
+    @doc(klass=_shared_doc_kwargs["klass"])
     def ffill(
         self: FrameOrSeries,
         axis=None,
@@ -6458,6 +6464,7 @@ class NDFrame(PandasObject, SelectionMixin, indexing.IndexingMixin):
     pad = ffill
 
     @final
+    @doc(klass=_shared_doc_kwargs["klass"])
     def bfill(
         self: FrameOrSeries,
         axis=None,
@@ -10887,8 +10894,10 @@ class NDFrame(PandasObject, SelectionMixin, indexing.IndexingMixin):
         # [assignment]
         cls.all = all  # type: ignore[assignment]
 
+        # error: Argument 1 to "doc" has incompatible type "Optional[str]"; expected
+        # "Union[str, Callable[..., Any]]"
         @doc(
-            NDFrame.mad,
+            NDFrame.mad.__doc__,  # type: ignore[arg-type]
             desc="Return the mean absolute deviation of the values "
             "over the requested axis.",
             name1=name1,

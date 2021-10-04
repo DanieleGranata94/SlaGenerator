@@ -1,0 +1,462 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<style>
+table, th, td {
+	border: 0px solid grey;
+	border-collapse: collapse;
+	padding: 7px;
+}
+
+textarea {
+	width: 100%;
+}
+
+input[type=number] {
+	width: 40px;
+}
+
+img {
+	width: 100%;
+}
+
+input[type=checkbox] {
+	/* All browsers except webkit*/
+	transform: scale(2);
+	/* Webkit browsers*/
+	-webkit-transform: scale(2);
+}
+
+a.tip {
+	text-decoration: none
+}
+
+a.tip:hover {
+	cursor: help;
+	position: relative
+}
+
+a.tip span {
+	display: none
+}
+
+a.tip:hover span {
+	border: #c0c0c0 1px dotted;
+	padding: 5px 20px 5px 5px;
+	display: block;
+	z-index: 100;
+	background: #f0f0f0 no-repeat 100% 5%;
+	left: 0px;
+	margin: 10px;
+	width: 250px;
+	position: absolute;
+	top: 10px;
+	text-decoration: none
+}
+
+a.tip2 {
+	color: #000000;
+	text-decoration: none
+}
+
+a.tip2:hover {
+	cursor: help;
+	position: relative
+}
+
+a.tip2 span {
+	display: none
+}
+
+a.tip2:hover span {
+	border: #c0c0c0 1px dotted;
+	padding: 5px 20px 5px 5px;
+	display: block;
+	z-index: 100;
+	background: #f0f0f0 no-repeat 100% 5%;
+	left: 0px;
+	margin: 10px;
+	width: 250px;
+	position: absolute;
+	top: 10px;
+	text-decoration: none
+}
+
+.CSSTableGenerator {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	box-shadow: 10px 10px 5px #888888;
+	border: 1px solid #000000;
+	-moz-border-radius-bottomleft: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+	-moz-border-radius-bottomright: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	-moz-border-radius-topright: 0px;
+	-webkit-border-top-right-radius: 0px;
+	border-top-right-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	-webkit-border-top-left-radius: 0px;
+	border-top-left-radius: 0px;
+}
+
+.CSSTableGenerator table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.CSSTableGenerator tr:last-child td:last-child {
+	-moz-border-radius-bottomright: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.CSSTableGenerator table tr:first-child td:first-child {
+	-moz-border-radius-topleft: 0px;
+	-webkit-border-top-left-radius: 0px;
+	border-top-left-radius: 0px;
+}
+
+.CSSTableGenerator table tr:first-child td:last-child {
+	-moz-border-radius-topright: 0px;
+	-webkit-border-top-right-radius: 0px;
+	border-top-right-radius: 0px;
+}
+
+.CSSTableGenerator tr:last-child td:first-child {
+	-moz-border-radius-bottomleft: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+.CSSTableGenerator tr:hover td {
+	background-color: #f2f2f2;
+}
+
+.CSSTableGenerator td {
+	vertical-align: middle;
+	background-color: #ffffff;
+	border: 1px solid #000000;
+	border-width: 0px 1px 1px 0px;
+	text-align: center;
+	padding: 7px;
+	font-size: 14px;
+	font-family: Arial;
+	font-weight: normal;
+	color: #000000;
+}
+
+.CSSTableGenerator tr:last-child td {
+	border-width: 0px 1px 0px 0px;
+}
+
+.CSSTableGenerator tr td:last-child {
+	border-width: 0px 0px 1px 0px;
+}
+
+.CSSTableGenerator tr:last-child td:last-child {
+	border-width: 0px 0px 0px 0px;
+}
+
+.CSSTableGenerator tr:first-child td {
+	background: -o-linear-gradient(bottom, #ffffff 5%, #ffffff 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff
+		), color-stop(1, #ffffff));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",
+		endColorstr="#ffffff");
+	background: -o-linear-gradient(top, #ffffff, #ffffff);
+	background-color: #ffffff;
+	border: 0px solid #000000;
+	text-align: center;
+	border-width: 0px 0px 1px 1px;
+	font-size: 14px;
+	font-family: Arial;
+	font-weight: bold;
+	color: #000000;
+}
+
+.CSSTableGenerator tr:first-child:hover td {
+	background: -o-linear-gradient(bottom, #ffffff 5%, #ffffff 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff
+		), color-stop(1, #ffffff));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",
+		endColorstr="#ffffff");
+	background-color: #ffffff;
+}
+
+.CSSTableGenerator tr:first-child td:first-child {
+	border-width: 0px 0px 1px 0px;
+}
+
+.CSSTableGenerator tr:first-child td:last-child {
+	border-width: 0px 0px 1px 1px;
+}
+</style>
+
+<div class=container>
+
+	</div>
+
+	<!-- RISKS EVALUATION -->
+	<div class="panel panel-default">
+		<div class="panel-heading text-center">
+			<span class="lead">
+				<h2>Risks Evaluation
+					({{appName}}) </h2>
+			</span>
+		</div>
+
+
+		<div class="panel-body">
+
+
+			<div>
+            <p>Select the component you want to calculate the risk:<br><br></p>
+            <form method="POST">
+
+                <select class="form-select" name="dropdown" value="{{ ComponentName }}">
+                          {% for component in components %}
+                              {% if component.1 %}
+                                  <option selected value="{{ component.0.name }}">{{ component.0.name }}</option>
+                              {% else %}
+                                  <option value="{{ component.0.name }}">{{ component.0.name }}</option>
+                              {% endif %}
+
+                            {% endfor %}
+                        </select>
+                <input  type = "submit" value="Select">
+
+
+            </form>
+
+				<p>By following the approach here, it is possible to estimate
+					the severity of all of these risks to the business and make an
+					informed decision about what to do about those risks. Having a
+					system in place for rating risks will save time and eliminate
+					arguing about priorities.</p>
+
+				<p>The likelihood level is already set and it is no editable.</p>
+				<p>At the end, you'll get an overall risk level according to the
+					scale shown below:</p>
+				<table align="center">
+					<tr>
+						<td align="center" width="90px">VERY LOW</td>
+						<td align="center" width="90px">LOW</td>
+						<td align="center" width="90px">MEDIUM</td>
+						<td align="center" width="90px">HIGH</td>
+						<td align="center" width="90px">CRITICAL</td>
+					</tr>
+					<tr>
+						<td style="background: green; padding: 5px;"></td>
+						<td style="background: #d9d926; padding: 5px;"></td>
+						<td style="background: orange; padding: 5px;"></td>
+						<td style="background: red; padding: 5px;"></td>
+						<td style="background: #ff00ff; padding: 5px;"></td>
+					</tr>
+				</table>
+				<br>
+                            {% if ComponentName %}
+            				<div style="text-align: center;">
+					<button style="text-align: center;" class="btn btn-primary">Save Evaluation for {{ ComponentName }}</button>
+				            </div>
+                            {% endif %}
+            				<br>
+
+				<div>
+					<table style="width: 100%; border: 1px solid grey;">
+                        {% for threat in threats %}
+						<tr
+							style="border: 1px solid grey;">
+							<td width="20%">
+								<b>Threat: </b>
+								<a class="tip2">
+									{{threat.0.name}}<br>
+									<span>{{threat.0.description}}</span></a>
+								<div style="padding: 3px;">
+									{% if threat.1 %}<b>Strides: </b>{% endif %}
+									<p>{% for stride in threat.1 %} {{ stride }}{% if not forloop.last %},{% endif %}{% endfor %}</p>
+								</div>
+							</td>
+							<td align="center"><span
+								ng-style="{'VERY LOW':{color:'green'},'LOW':{color:'#d9d926'},'MEDIUM':{color:'orange'},'HIGH':{color:'red'},'CRITICAL':{color:'#ff00ff'}}[threat.riskSeverity]"><b>OVERALL
+										RISK SEVERITY = {{threat.riskSeverity}}</b></span>
+
+								<table>
+									<td align="center" valign="top"><b>LIKELIHOOD =
+											{{threat.likehood}}</b>
+										<table>
+											<tr>
+												<td align="center"><b>Threat Agent Factors</b></td>
+												<td align="center"><b>Vulnerability Factors</b></td>
+											</tr>
+										</table>
+										<table>
+											<tr>
+												<td><a class="tip">Skill level<span>How
+															technically skilled is this group of threat agents?
+															Security penetration skills (9), network and programming
+															skills (6), advanced computer user (5), some technical
+															skills (3), no technical skills (1)</span></a></td>
+												<td><input type="number" min="0" max="9" value="{{ ThreatAgentScores.skill }}"
+													></td>
+												<td><a class="tip">Ease of discovery<span>How
+															easy is it for this group of threat agents to discover
+															this vulnerability? Practically impossible (1), difficult
+															(3), easy (7), automated tools available (9)</span></a></td>
+												<td><input type="number" min="0" max="9"value="{{threat.0.owasp_ease_of_discovery}}">
+											</tr>
+											<tr>
+												<td><a class="tip">Motive<span>How motivated
+															are the threat agents to find and exploit this
+															vulnerability? Low or no reward (1), possible reward (4),
+															high reward (9)</span></a></td>
+												<td><input type="number" min="0" max="9" value="{{ ThreatAgentScores.motive }}"></td>
+												<td><a class="tip">Ease of exploit<span>How
+															easy is it for this group of threat agents to actually
+															exploit this vulnerability? Theoretical (1), difficult
+															(3), easy (5), automated tools available (9)</span></a></td>
+												<td><input type="number" min="0" max="9" value="{{threat.0.owasp_ease_of_exploit}}">
+											</tr>
+											<tr>
+												<td><a class="tip">Opportunity<span>What
+															resources and opportunities are required for this group
+															of threat agents to find and exploit this vulnerability?
+															Full access or expensive resources required (0), special
+															access or resources required (4), some access or
+															resources required (7), no access or resources required
+															(9)</span></a></td>
+												<td><input type="number" min="0" max="9" value="{{ ThreatAgentScores.opportunity }}"
+													></td>
+												<td><a class="tip">Awareness<span>How well
+															known is this vulnerability to this group of threat
+															agents? Unknown (1), hidden (4), obvious (6), public
+															knowledge (9)</span></a></td>
+												<td><input type="number" min="0" max="9" value="{{threat.0.owasp_awareness}}"
+													></td>
+											</tr>
+											<tr>
+												<td><a class="tip">Size<span>How large is
+															this group of threat agents? Developers (2), system
+															administrators (2), intranet users (4), partners (5),
+															authenticated users (6), anonymous Internet users (9)</span></a></td>
+												<td><input type="number"min="0" max="9" value="{{ ThreatAgentScores.skill }}"></td>
+
+												<td><a class="tip">Intrusion detection<span>How
+															likely is an exploit to be detected? Active detection in
+															application (1), logged and reviewed (3), logged without
+															review (8), not logged (9)</span></a></td>
+												<td><input type="number" min="0" max="9" value="{{threat.0.owasp_intrusion_detection}}">
+											</tr>
+
+										</table></td>
+
+									<td align="center" valign="top"><b>IMPACT =
+											{{threat.impact}}</b>
+
+										<table>
+
+											<tr>
+												<td align="center"><b>Technical Impact Factors</b></td>
+												<td align="center"><b>Business Impact Factors</b></td>
+											</tr>
+										</table>
+										<table>
+											<tr>
+												<td><a class="tip">Loss of confidentiality<span>How
+															much data could be disclosed and how sensitive is it?
+															Minimal non-sensitive data disclosed (2), minimal
+															critical data disclosed (6), extensive non-sensitive data
+															disclosed (6), extensive critical data disclosed (7), all
+															data disclosed (9)</span></a></td>
+												<td><input type="number" min="0" max="9" value="{{ threat.0.lossofc }}" ></td>
+												<td><a class="tip">Financial damage<span>How
+															much financial damage will result from an exploit? Less
+															than the cost to fix the vulnerability (1), minor effect
+															on annual profit (3), significant effect on annual profit
+															(7), bankruptcy (9)</span></a></td>
+												<td><input type="number" min="0" max="9" value="{{ threat.0.financial }}"></td>
+											</tr>
+											<tr>
+												<td><a class="tip">Loss of integrity<span>How
+															much data could be corrupted and how damaged is it?
+															Minimal slightly corrupt data (1), minimal seriously
+															corrupt data (3), extensive slightly corrupt data (5),
+															extensive seriously corrupt data (7), all data totally
+															corrupt (9)</span></a></td>
+												<td><input type="number" min="0" max="9" value="{{ threat.0.lossofi }}"></td>
+												<td><a class="tip">Reputation damage<span>Would
+															an exploit result in reputation damage that would harm
+															the business? Minimal damage (1), Loss of major accounts
+															(4), loss of goodwill (5), brand damage (9)</span></a></td>
+												<td><input type="number"min="0" max="9" value="{{ threat.0.reputation }}"></td>
+											</tr>
+											<tr>
+												<td><a class="tip">Loss of availability<span>How
+															much service could be lost and how vital is it? Minimal
+															secondary services interrupted (1), minimal primary
+															services interrupted (5), extensive secondary services
+															interrupted (5), extensive primary services interrupted
+															(7), all services completely lost (9)</span></a></td>
+												<td><input type="number" min="0" max="9" value="{{ threat.0.lossofa }}"></td>
+												<td><a class="tip">Non-compliance<span>How
+															much exposure does non-compliance introduce? Minor
+															violation (2), clear violation (5), high profile
+															violation (7)</span></a></td>
+												<td><input type="number"min="0" max="9" value="{{ threat.0.noncompliance }}"></td>
+											</tr>
+											<tr>
+												<td><a class="tip">Loss of accountability<span>Are
+															the threat agents' actions traceable to an individual?
+															Fully traceable (1), possibly traceable (7), completely
+															anonymous (9)</span></a></td>
+												<td><input type="number" min="0" max="9"
+													value="0" ng-disabled="true"></td>
+												<td><a class="tip">Privacy violation<span>How
+															much personally identifiable information could be
+															disclosed? One individual (3), hundreds of people (5),
+															thousands of people (7), millions of people (9)</span></a></td>
+												<td><input type="number" min="0" max="9"
+													value="{{ threat.0.privacy }}"></td>
+
+											</tr>
+
+
+										</table></td>
+
+								</table></td>
+                            {% endfor %}
+
+
+						</tr>
+
+					</table>
+				</div>
+				<br>
+
+				<br>
+
+
+				</div>
+			</div>
+		</div>
+
+
+
+
+</div>
+
+
+{% endblock %}
+
+
+
+

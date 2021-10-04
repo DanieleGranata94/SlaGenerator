@@ -1,0 +1,3 @@
+select DISTINCT SlaGenerator_threat.name,SlaGenerator_threat.description,SlaGenerator_attribute_value.attribute_value from SlaGenerator_threat
+inner join SlaGenerator_threat_attribute_value on SlaGenerator_threat.id=SlaGenerator_threat_attribute_value.threat_id inner join SlaGenerator_attribute_value on 
+SlaGenerator_attribute_value.id=SlaGenerator_threat_attribute_value.attribute_value_id

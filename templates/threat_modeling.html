@@ -24,6 +24,12 @@
             <button type="submit" class="btn btn-primary btn-sm">Export Threat Modeling</button>
         </form>
 
+        <form method="POST" action="{% url 'risk_analysis' appId=appId  %}" >
+            {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-sm" style="  margin-left: 400px">Start Risk Analysis</button>
+        </form>
+        <br><br><br>
+
             {% for threat in threats %}
                 <tr>
                     <td style="font-family: 'Times New Roman';font-size: larger">
@@ -35,10 +41,10 @@
                     <br>
                     <b>Source</b> : {{ threat.0.source }}
                     <br>
-                    <b>Stride</b> :{% for stride in threat.1 %} {{ stride }}{% if not forloop.last %},{% endif %}{% endfor %}
-                    <br>
-                    <b>Compromised Security Requirement</b> : {% for requirement in threat.2 %} {{ requirement }}{% if not forloop.last %},{% endif %}{% endfor %}
-                    <br>
+                    {% if threat.2 %}<b>Stride:</b> {% for stride in threat.1 %} {{ stride }}{% if not forloop.last %},{% endif %}{% endfor %}
+                    <br>{% endif %}
+                    {% if threat.1 %}<b>Compromised Security Requirement</b> : {% for requirement in threat.2 %} {{ requirement }}{% if not forloop.last %},{% endif %}{% endfor %}
+                    <br>{% endif %}
                 </tr>
             {% endfor %}
         </tbody>

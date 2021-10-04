@@ -1,0 +1,50 @@
+function checkInput(TAReply)
+{
+console.log("prova");
+    if(TAReply.id==1)
+    {
+        self.TAReplies[1].selected=false;
+    }
+    if(TAReply.id==2)
+    {
+        self.TAReplies[0].selected=false;
+    }
+
+    if(TAReply.id==3)
+    {
+        self.TAReplies[3].selected=false;
+    }
+    if(TAReply.id==4)
+    {
+        self.TAReplies[2].selected=false;
+    }
+
+    if(TAReply.id==5)
+    {
+        self.TAReplies[6].selected=false;
+    }
+    if(TAReply.id==6)
+    {
+        self.TAReplies[6].selected=false;
+    }
+    if(TAReply.id==8)
+    {
+        self.TAReplies[6].selected=false;
+    }
+    if(TAReply.id==9)
+    {
+        self.TAReplies[6].selected=false;
+    }
+    if(TAReply.id==10)
+    {
+        self.TAReplies[6].selected=false;
+    }
+    if(TAReply.id==7)
+    {
+        self.TAReplies[4].selected=false;
+        self.TAReplies[5].selected=false;
+        self.TAReplies[7].selected=false;
+        self.TAReplies[8].selected=false;
+        self.TAReplies[9].selected=false;
+    }
+}

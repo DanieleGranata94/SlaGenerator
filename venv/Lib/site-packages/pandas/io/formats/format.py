@@ -1254,7 +1254,9 @@ class GenericArrayFormatter:
             float_format = get_option("display.float_format")
             if float_format is None:
                 precision = get_option("display.precision")
-                float_format = lambda x: f"{x: .{precision:d}f}"
+                float_format = lambda x: _trim_zeros_single_float(
+                    f"{x: .{precision:d}f}"
+                )
         else:
             float_format = self.float_format
 
@@ -1314,8 +1316,6 @@ class GenericArrayFormatter:
                 else:
                     tpl = " {v}"
                 fmt_values.append(tpl.format(v=_format(v)))
-
-        fmt_values = _trim_zeros_float(str_floats=fmt_values, decimal=".")
 
         return fmt_values
 
@@ -1832,11 +1832,25 @@ def _trim_zeros_complex(str_complexes: np.ndarray, decimal: str = ".") -> List[s
     return padded
 
 
+def _trim_zeros_single_float(str_float: str) -> str:
+    """
+    Trims trailing zeros after a decimal point,
+    leaving just one if necessary.
+    """
+    str_float = str_float.rstrip("0")
+    if str_float.endswith("."):
+        str_float += "0"
+
+    return str_float
+
+
 def _trim_zeros_float(
     str_floats: Union[np.ndarray, List[str]], decimal: str = "."
 ) -> List[str]:
     """
-    Trims zeros, leaving just one before the decimal points if need be.
+    Trims the maximum number of trailing zeros equally from
+    all numbers containing decimals, leaving just one if
+    necessary.
     """
     trimmed = str_floats
     number_regex = re.compile(fr"^\s*[\+-]?[0-9]+\{decimal}[0-9]*$")

@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<style>
+    a.tip {
+        text-decoration: none
+    }
+
+    a.tip:hover {
+        cursor: help;
+        position: relative
+    }
+
+    a.tip span {
+        display: none
+    }
+
+    a.tip:hover span {
+        border: #c0c0c0 1px dotted;
+        padding: 5px 20px 5px 5px;
+        display: block;
+        z-index: 100;
+        background: #f0f0f0 no-repeat 100% 5%;
+        left: 0px;
+        margin: 10px;
+        width: 250px;
+        position: absolute;
+        top: 10px;
+        text-decoration: none
+    }
+
+</style>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        text-align: left;
+        padding: 8px;
+    }
+
+
+</style>
+
+<div class=container>
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <span class="lead">
+            <h2>Threat Agent Wizard</h2>
+                </span>
+        </div>
+        <br>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+        <form method="POST" action="{% url 'threat_agent_generation' appId=appId %}">
+
+                <table border="1" style="width: 99%; ">
+
+
+                    {% for question_replies in questions_replies %}
+                    <tr style="border-bottom: 1px solid #ddd" >
+
+                        <td style="padding: 10px;" width="5%"><b>Question: {{ forloop.counter }}</b></td>
+                        <td style="padding: 10px;" width="55%"><br><b>{{question_replies.question}}</b>
+                            <br>
+
+                        <table  style="width: 100%;">
+                            {% for reply in question_replies.replies %}
+                            <tr type="item">
+                                <br>
+                                <td>
+
+                                    <input type="checkbox"  name="{{ reply }}">
+                                    <a>{{reply}}</a>
+                                    </input>
+
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+
+                        </td>
+
+
+                    </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+
+            <div style="text-align: center;">
+                <button style="text-align: center;" class="btn btn-primary">Submit Questions</button>
+            </div>
+        </form>
+        <br>
+        <br>
+
+
+
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+    </script>
+
+{% endblock %}
+

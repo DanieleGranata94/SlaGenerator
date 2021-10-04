@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<style>
+
+    a.tip {
+        text-decoration: none
+    }
+
+    a.tip:hover {
+        cursor: help;
+        position: relative
+    }
+
+    a.tip span {
+        display: none
+    }
+
+    a.tip:hover span {
+        border: #c0c0c0 1px dotted;
+        padding: 5px 20px 5px 5px;
+        display: block;
+        z-index: 100;
+        background: #f0f0f0 no-repeat 100% 5%;
+        left: 0px;
+        margin: 10px;
+        width: 250px;
+        position: absolute;
+        top: 10px;
+        text-decoration: none
+    }
+
+</style>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        text-align: left;
+        padding: 8px;
+    }
+
+
+</style>
+
+<div class=container>
+    <form method="POST" action="{% url 'calculate_threat_agent_risks' appId=appId %}">
+    <div class="panel panel-default">
+        <br>
+        <br>
+
+        <div class="panel-heading text-center">
+            <span class="lead">
+            <h2>Categories Result</h2>
+                </span>
+        </div>
+
+        <table border="1" style="width: 100%;" ng-show="show_table">
+             {% for Category,attributes in ThreatAgents.items %}
+
+            <tr style="border-bottom: 1px solid #ddd" >
+                <br>
+                <td style="padding: 4px;" width="30%">
+                    <h4><b>Category</b></h4>
+                    <h3 type="text" name={{Category.category}}> {{Category.category}} </h3>
+
+                </td>
+
+                <td  style="padding: 4px;" width="45%">
+                    <h4><b>Description</b></h4>
+                     {{Category.description}}
+                    <h4><b>Threat Agent Common Actions</b></h4>
+                       {{Category.common_actions}}
+                        <br>
+                    {% for attribute in attributes %}
+                    <ul>
+                        <li >
+                             {{attribute.attribute.attribute}}: {{attribute.attribute.attribute_value}}
+                        </li>
+
+
+                    </ul>
+                        {% endfor %}
+
+                </td>
+
+                <td width="25%" >
+                    How does you rate the category?
+                    <br>
+                    <br>
+                    <div class="btn-group btn-toggle">
+                        <select class="form-select" aria-label="How does you rate the category?" name="{{Category.category}}">
+                          <option value="L">Low</option>
+                          <option value="M">Medium</option>
+                          <option value="H">High</option>
+                        </select>
+                    </div>
+                </td>
+
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+
+    <div style="text-align: center;">
+        <button>Submit Evaluation</button>
+    </div>
+
+        </form>
+
+</div>
+
+    <script>
+    function checkInput(TAReply)
+    {
+        console.log(TAReply)
+    if(TAReply.id==1)
+    {
+        self.TAReplies[1].selected=false;
+    }
+    if(TAReply.id==2)
+    {
+        self.TAReplies[0].selected=false;
+    }
+
+    if(TAReply.id==3)
+    {
+        self.TAReplies[3].selected=false;
+    }
+    if(TAReply.id==4)
+    {
+        self.TAReplies[2].selected=false;
+    }
+
+    if(TAReply.id==5)
+    {
+        self.TAReplies[6].selected=false;
+    }
+    if(TAReply.id==6)
+    {
+        self.TAReplies[6].selected=false;
+    }
+    if(TAReply.id==8)
+    {
+        self.TAReplies[6].selected=false;
+    }
+    if(TAReply.id==9)
+    {
+        self.TAReplies[6].selected=false;
+    }
+    if(TAReply.id==10)
+    {
+        self.TAReplies[6].selected=false;
+    }
+    if(TAReply.id==7)
+    {
+        self.TAReplies[4].selected=false;
+        self.TAReplies[5].selected=false;
+        self.TAReplies[7].selected=false;
+        self.TAReplies[8].selected=false;
+        self.TAReplies[9].selected=false;
+    }
+    }
+
+    </script>
+
+{% endblock %}
+
