@@ -51,7 +51,7 @@
 </style>
 
 <div class=container>
-    <form method="POST" action="{% url 'calculate_threat_agent_risks' appId=appId %}">
+    <form method="POST" action="{% url 'risk_analysis' appId=appId  %}">
     <div class="panel panel-default">
         <br>
         <br>
@@ -98,7 +98,7 @@
                     <div class="btn-group btn-toggle">
                         <select class="form-select" aria-label="How does you rate the category?" name="{{Category.category}}">
                           <option value="L">Low</option>
-                          <option value="M">Medium</option>
+                          <option value="M" selected>Medium</option>
                           <option value="H">High</option>
                         </select>
                     </div>

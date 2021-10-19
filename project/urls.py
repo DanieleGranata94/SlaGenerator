@@ -28,6 +28,8 @@ urlpatterns = [
     path('threat_agent_wizard/<int:appId>', views.threat_agent_wizard, name='threat_agent_wizard'),
     path('risk_analysis/<int:appId>', views.risk_analysis, name='risk_analysis'),
     path('stride_impact_evaluation/<int:appId>', views.stride_impact_evaluation, name='stride_impact_evaluation'),
+    path('stride_impact_evaluation_menu/<int:appId>', views.stride_impact_evaluation_menu, name='stride_impact_evaluation_menu'),
+    path('threat_modeling_menu/<int:appId>', views.threat_modeling_menu, name='threat_modeling_menu'),
     path('threat_agent_generation/<int:appId>', views.threat_agent_generation, name='threat_agent_generation'),
     path('macm_viewer/<int:appId>', views.macm_viewer, name='macm_viewer'),
 

@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
-    <title>Sla Generator · Threat Modeling</title>
+    <title>Sla Generator</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/starter-template/">
 
@@ -56,33 +56,68 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" style="color: #0066FF">Sla Generator - Threat Modeling</a>
+    <a class="navbar-brand" style="color: #0066FF">Sla Generator</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/ ">Apps management<span class="sr-only">(current)</span></a>
+        <ul class="navbar-nav mr-auto" >
+            <li class="nav-item active" style="margin-left: 30px">
+                <a class="nav-link" href="/">Apps management<span class="sr-only">(current)</span></a>
             </li>
-            {% if pk %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        Threat modeling
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% for process in processes%}
-                        <a class="dropdown-item" href="/process_view_task_type/{{ process.pk }}">{{ process.name }}</a>
-                        {% endfor %}
-                    </div>
-                </li>
-            {% endif %}
+            {% if appId %}
+
+            <li style="margin-left: 20px">
+                <a class="nav-link" href="#" id="navbarDropdown" role="button"
+                   aria-haspopup="true">
+                    MACM Refinement
+                </a>
+            </li>
+
+            <li style="margin-left: 20px">
+                <a class="nav-link" href="{% url 'threat_agent_wizard' appId=appId  %}"  id="navbarDropdown" role="button"
+                   aria-haspopup="true">
+                    Threat Agent Wizard
+                </a>
+            </li>
+
+            <li style="margin-left: 20px">
+                <a class="nav-link" href="{% url 'stride_impact_evaluation_menu' appId=appId  %}" id="navbarDropdown" role="button"
+                   aria-haspopup="true">
+                    Stride Impact Evaluation
+                </a>
+            </li>
+
+            <li style="margin-left: 20px">
+                <a class="nav-link" href="{% url 'threat_modeling_menu' appId=appId %}" id="navbarDropdown" role="button"
+                   aria-haspopup="true">
+                    Threat Modelling
+                </a>
+            </li>
+
+            <li style="margin-left: 20px">
+                <a class="nav-link" href="{% url 'risk_analysis' appId=appId %}"  id="navbarDropdown" role="button"
+                   aria-haspopup="true">
+                    Risk Rating
+                </a>
+            </li>
+
+            <li style="margin-left: 20px">
+                <a class="nav-link" href="#" id="navbarDropdown" role="button"
+                   aria-haspopup="true">
+                    Results
+                </a>
+            </li>
+
+
+
+
         </ul>
     </div>
+    {% endif %}
+
 </nav>
 
 <script>

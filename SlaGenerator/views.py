@@ -202,6 +202,18 @@ def calculate_threat_agent_risks(request,appId):
     return render(request, 'stride_impact_evaluation.html', {"appId": appId})
 
 
+
+@csrf_exempt
+def stride_impact_evaluation_menu(request,appId):
+
+    return render(request, 'stride_impact_evaluation.html', {"appId": appId})
+
+@csrf_exempt
+def threat_modeling_menu(request,appId):
+    threats_list = threat_modeling(appId)
+    return render(request, 'threat_modeling.html', {"threats": threats_list, "appId": appId})
+
+
 @csrf_exempt
 def stride_impact_evaluation(request,appId):
     threats_list = threat_modeling(appId)
@@ -372,7 +384,6 @@ def risk_analysis(request, appId):
     LossOfAPreConditionValue = 0
 
     for threat in threats:
-        print(threat[0].source)
         PreCondition=str(threat[0].PreCondition)
         PostCondition=str(threat[0].PostCondition)
         maxFinancial = 0
@@ -396,21 +407,16 @@ def risk_analysis(request, appId):
         threat[0].privacy=maxprivacy
 
         #elimino [ e ]
-        print(PreCondition)
-        print(PostCondition)
-        try:
 
+        try:
             PreCondition.replace("[","")
             PreCondition.replace("]","")
             PostCondition.replace("[","")
             PostCondition.replace("]","")
 
-
-
             #splitto con le ,
             PreCondition=PreCondition.split(",")
             PostCondition=PostCondition.split(",")
-
 
             if(PreCondition[0]=='n'):
                 LossOfCPreConditionValue=0
@@ -450,7 +456,6 @@ def risk_analysis(request, appId):
                 LossOfAPreConditionValue = 1
             if (PreCondition[2] == 'f'):
                 LossOfAPreConditionValue = 2
-
             if (PostCondition[2] == 'n'):
                 LossOfAPostConditionValue = 0
             if (PostCondition[2] == 'p'):
@@ -467,17 +472,8 @@ def risk_analysis(request, appId):
         except:
             print("iNFO MISSING")
 
-
-
-
-
-
-
-
     return render(request, 'risk_analysis.html', {"appName": appName,"ComponentName":SelectedComponentName,"threats":threats,
-                                                  "components":componentsWithThreats,"ThreatAgentScores":lastScore})
-
-
+                                                  "components":componentsWithThreats,"ThreatAgentScores":lastScore,"appId": appId})
 
 
 
@@ -693,7 +689,7 @@ def export_threat_modeling(request, appId):
                         cia+=single
 
                 # columns = ['Asset name', 'Asset type', 'Threat', 'Description', 'CIA', 'STRIDE']
-                print(threat[4].attribute_value)
+                #print(threat[4].attribute_value)
                 # Define the data for each cell in the row
                 row = [
                     row_num,
