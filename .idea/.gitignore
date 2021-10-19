@@ -1,0 +1,9 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+project/credentials.py
+# Datasource local storage ignored files
+/../../../../../../:\Users\danie\PycharmProjects\djangoProject\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
