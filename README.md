@@ -9,6 +9,9 @@ The application is developed using the following technologies:
 * SQLlite
 ## CLIENT-SIDE
 * HTML, CSS (BOOTSTRAP)
+## Graph Database
+Neo4j is used to collect the MACMs. 
+Before starting the application, neo4j must be installed, running on port 7474 and the neo4j credentials configured on credentials.py file.
 
 ## Configuration guide
 ### Software Requirements
