@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import logging
 from pathlib import Path
 
 
@@ -31,6 +31,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# Logging configuration level
+logging.basicConfig(level=logging.DEBUG, format='%(levelname)s:%(filename)s:%(lineno)s:%(funcName)s: %(message)s')
 
 # Application definition
 

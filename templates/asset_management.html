@@ -52,8 +52,35 @@
                 </tr>
             {% endfor %}
         </tbody>
-    </table>
-
+        </table>
+        <table class="table">
+        <thead>
+            <tr>
+                <th style="width:50%"><h3>Relation Info</h3></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for relation in relations %}
+                <tr>
+                <td style="font-family: 'Times New Roman';font-size: larger">
+                <b>Protocol</b> : {{ relation.3 }}
+                </td>
+                    <td>
+                <td>
+                    <form style="alignment:center"  method="POST" action="{% url 'threat_modeling_per_asset' appId=appId assetId=relation.1 %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-sm">Client<br />{{ relation.4 }}</button>
+                    </form>
+                </td>
+                <td>
+                    <form style="alignment:center"  method="POST" action="{% url 'threat_modeling_per_asset' appId=appId assetId=relation.2 %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-sm">Server<br />{{ relation.5 }}</button>
+                    </form>
+                </td>
+            {% endfor %}
+        </tbody>
+        </table>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

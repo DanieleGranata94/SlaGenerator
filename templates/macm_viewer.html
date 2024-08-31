@@ -1,61 +1,67 @@
+{% extends 'base.html' %}
 
-<html>
-<head>
-    <title>MACM Viewer</title>
-    <style type="text/css">
-        html, body {
-            font: 16pt arial;
-        }
+{% block content %}
 
-        #viz {
-            width: 900px;
-            height: 700px;
-            border: 1px solid lightgray;
-            font: 22pt arial;
-        }
+<title>MACM Viewer</title>
+<style>
+    html, body {
+        font: 16pt arial;
+        margin-bottom: 10%;
+    }
 
-    </style>
+    #viz {
+        width: 900px;
+        height: 700px;
+        border: 1px solid lightgray;
+        font: 22pt arial;
+    }
 
-    <script src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
+</style>
 
-    <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous"></script>
+<script src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
 
-    <script type="text/javascript">
-		// define config car
-		// instantiate nodevis object
-		// draw
+<script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+</script>
 
-        //html,css,javascript --- python django --- mysql,mysqlite
+<script type="text/javascript">
+    // define config car
+    // instantiate nodevis object
+    // draw
 
-		var viz;
+    //html,css,javascript --- python django --- mysql,mysqlite
 
-		function draw(appId) {
-			var config = {
-				container_id: "viz",
-				server_url: "bolt://localhost:7687",
-				server_user: "neo4j",
-				server_password: "max",
-                //labels:{ "VM": { name: "name" } },
-				initial_cypher: "MATCH (n{app_id:'"+appId+"'})-[r]->(m) RETURN n,r,m"
-			};
+    let viz;
 
-			viz = new NeoVis.default(config);
-			viz.render();
-			console.log(viz);
-		}
-    </script>
-</head>
+    function draw(appId) {
+        const config = {
+            containerId: "viz",
+            neo4j: {
+                serverUrl: "bolt://localhost:7687",
+                serverUser: "neo4j",
+                serverPassword: "neo4jPass",
+            },
+            initialCypher: "MATCH (n{app_id:'"+appId+"'})-[r]->(m) RETURN n,r,m"
+        };
+
+        viz = new NeoVis.default(config);
+        viz.render();
+        console.log(viz);
+    }
+</script>
+
 <body onload="draw({{ appId }})">
+<div class="starter-template" style="margin-top: -6%;"> </div>
+
+<H1>MACM Viewer</H1>
+
 <div id="viz"></div>
 
-
-
-
-
+<p>This is the MACM Model of the application {{ appId }}</p>
 </body>
-
-
-</html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+{% endblock %}
